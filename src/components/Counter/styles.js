@@ -18,7 +18,7 @@ export const Counter = styled.span`
   ${({ theme }) => css`
     font-weight: 600;
     font-size: 16px;
-    color: ${theme.colors.secundary};
+    color: ${theme.colors.secundary[100]};
   `}
 `;
 export const CounterButton = styled.button`
@@ -32,7 +32,7 @@ export const CounterButton = styled.button`
     font-size: 18px;
     border: none;
     font-weight: 600;
-    color: ${theme.colors.secundary};
+    color: ${theme.colors.secundary[100]};
     opacity: 0.5;
     cursor: pointer;
     :hover {
