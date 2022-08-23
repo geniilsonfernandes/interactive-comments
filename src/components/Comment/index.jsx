@@ -8,7 +8,7 @@ import Reply from "../Reply";
 
 import * as S from "./styles";
 
-const Comment = ({ hasAthor }) => {
+const Comment = ({ hasAthor, content }) => {
   const [editable, setEditable] = useState(false);
   const [showReplyInput, setShowReplyInput] = useState(false);
 
@@ -63,9 +63,7 @@ const Comment = ({ hasAthor }) => {
             ref={commnetEl}
             tabIndex={-1}
           >
-            Impressive! Though it seems the drag feature could be improved. But
-            overall it looks incredible. You ve nailed the design and the
-            responsiveness at various breakpoints works really well.
+            {content}
           </S.Comment>
           {editable && (
             <S.UpdateButton onClick={() => handleClickToUpdate("update")}>
@@ -80,7 +78,8 @@ const Comment = ({ hasAthor }) => {
 };
 
 Comment.propTypes = {
-  hasAthor: p.bool
+  hasAthor: p.bool,
+  content: p.string
 };
 
 export default Comment;
