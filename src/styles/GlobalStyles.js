@@ -11,7 +11,8 @@ export default createGlobalStyle`
       font-family: "Roboto", sans-serif;
       background: ${theme.colors.bg[100]};
     }
-    button {
+    button,
+    input {
       font-family: "Roboto", sans-serif;
     }
   `}

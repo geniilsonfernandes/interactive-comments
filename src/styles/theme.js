@@ -13,7 +13,8 @@ export default {
       500: "fff"
     },
     secundary: {
-      100: "#555aba"
+      100: "#555aba",
+      200: "#4449A4"
     },
     text: {
       100: "#333C45",
