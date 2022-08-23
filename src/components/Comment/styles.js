@@ -3,6 +3,12 @@ import { WrapperButtonWithIcon } from "../styles";
 
 const wrapperSpacing = 16;
 
+export const WrapperMain = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+`;
+
 export const Wrapper = styled.div`
   ${({ theme }) => css`
     padding: 16px;
