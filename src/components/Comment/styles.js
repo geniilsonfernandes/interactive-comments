@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { WrapperButtonWithIcon } from "../Styles";
+import { WrapperButtonWithIcon } from "../styles";
 
 const wrapperSpacing = 16;
 
@@ -92,6 +92,7 @@ const CommentModifiers = {
     }
   `
 };
+
 export const Comment = styled.p`
   ${({ theme, isEditable }) => css`
     margin-top: 8px;
