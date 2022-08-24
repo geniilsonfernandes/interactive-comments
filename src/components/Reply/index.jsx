@@ -1,17 +1,39 @@
 import React from "react";
+import p from "prop-types";
 import * as S from "./styles";
+import { useRef } from "react";
 
-const Reply = () => {
+const Reply = ({ onReply }) => {
+  const replyEl = useRef();
+
+  const handleSubmitClick = () => {
+    onReply &&
+      onReply({
+        HTML: replyEl.current.innerHTML,
+        text: replyEl.current.innerText,
+        value: replyEl.current.textContent
+      });
+    console.log({
+      HTML: replyEl.current.innerHTML,
+      text: replyEl.current.innerText,
+      value: replyEl.current.textContent
+    });
+  };
+
   return (
     <S.BoxWrapper>
-      <S.Comment contentEditable={true}>
-        Impressive! Though it seems the drag feature could be improved. But
-        overall it looks incredible. You ve nailed the design and the
-        responsiveness at various breakpoints works really well.
-      </S.Comment>
-      <S.SubmitButton>Send</S.SubmitButton>
+      <S.Comment
+        contentEditable={true}
+        ref={replyEl}
+        suppressContentEditableWarning={true}
+      ></S.Comment>
+      <S.SubmitButton onClick={() => handleSubmitClick()}>Send</S.SubmitButton>
     </S.BoxWrapper>
   );
+};
+
+Reply.propTypes = {
+  onReply: p.func
 };
 
 export default Reply;
