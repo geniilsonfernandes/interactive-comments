@@ -13,11 +13,6 @@ const Reply = ({ onReply }) => {
         text: replyEl.current.innerText,
         value: replyEl.current.textContent
       });
-    console.log({
-      HTML: replyEl.current.innerHTML,
-      text: replyEl.current.innerText,
-      value: replyEl.current.textContent
-    });
   };
 
   return (

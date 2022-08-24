@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import WrapperComment from "../../components/WrapperComment";
 
 import * as S from "./styles";
@@ -50,15 +50,24 @@ const data = [
 ];
 
 const Home = () => {
+  // eslint-disable-next-line no-unused-vars
+  const [mockComments, setMockComments] = useState(data);
+
+  const handleSetNewComment = (comment) => {
+    setMockComments((prevState) => [...prevState, comment]);
+  };
+
   return (
     <S.Wrapper>
-      {data.map(
+      {mockComments.map(
         (comment) =>
           !comment.reply && (
             <WrapperComment
+              id={comment.comments_id}
               key={comment.comments_id}
               content={comment.comment}
-              replys={comment.reply}
+              replys={mockComments}
+              onSetReply={handleSetNewComment}
             />
           )
       )}

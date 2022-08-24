@@ -8,7 +8,7 @@ import Reply from "../Reply";
 
 import * as S from "./styles";
 
-const Comment = ({ hasAthor, content }) => {
+const Comment = ({ hasAthor, content, id, onReplySubmit }) => {
   const [editable, setEditable] = useState(false);
   const [showReplyInput, setShowReplyInput] = useState(false);
 
@@ -25,6 +25,19 @@ const Comment = ({ hasAthor, content }) => {
 
   const handleReplyButton = () => {
     setShowReplyInput((s) => !s);
+  };
+
+  const handleSubmitReply = (reply) => {
+    onReplySubmit &&
+      onReplySubmit({
+        user: "genilson",
+        comments_id: Math.floor(Math.random() * 1000),
+        comment: reply.HTML,
+        replys_ids: [],
+        reply_parent: id,
+        reply: true
+      });
+    setShowReplyInput(false);
   };
 
   return (
@@ -62,9 +75,9 @@ const Comment = ({ hasAthor, content }) => {
             isEditable={editable}
             ref={commnetEl}
             tabIndex={-1}
-          >
-            {content}
-          </S.Comment>
+            suppressContentEditableWarning={true}
+            dangerouslySetInnerHTML={{ __html: content }}
+          />
           {editable && (
             <S.UpdateButton onClick={() => handleClickToUpdate("update")}>
               Update
@@ -72,14 +85,16 @@ const Comment = ({ hasAthor, content }) => {
           )}
         </S.Content>
       </S.Wrapper>
-      {showReplyInput && <Reply />}
+      {showReplyInput && <Reply onReply={handleSubmitReply} />}
     </S.WrapperMain>
   );
 };
 
 Comment.propTypes = {
   hasAthor: p.bool,
-  content: p.string
+  id: p.number,
+  content: p.string,
+  onReplySubmit: p.func
 };
 
 export default Comment;
