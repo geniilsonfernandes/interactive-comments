@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { WrapperButton, WrapperButtonWithIcon } from "../styles";
+import { WrapperButtonWithIcon } from "../styles";
 
 export const BoxWrapper = styled.div`
   ${({ theme }) => css`
@@ -21,8 +21,12 @@ export const Comment = styled.p`
     font-size: 16px;
     color: ${theme.colors.text[500]};
     border-radius: 4px;
-    border: 1px solid ${theme.colors.secundary[100]};
-    outline: 1px solid ${theme.colors.secundary[100]};
+    border: 1px solid ${theme.colors.background[300]};
+    outline: 1px solid ${theme.colors.background[300]};
+    :focus {
+      border: 1px solid ${theme.colors.secundary[200]};
+      outline: 1px solid ${theme.colors.secundary[200]};
+    }
   `}
 `;
 
@@ -32,17 +36,13 @@ export const Buttons = styled.div`
   gap: 8px;
 `;
 
-export const SubmitButton = styled.div`
-  ${WrapperButton}
-`;
-
 export const UserTag = styled.a`
   ${({ theme }) => css`
     display: inline;
     background: ${theme.colors.secundary[100]};
     padding: 2px 4px;
     font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
     border-radius: 2px;
     color: #fff;
     margin-right: 8px;
