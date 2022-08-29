@@ -9,6 +9,18 @@ export const BoxWrapper = styled.div`
     gap: 16px;
     display: grid;
     grid-template-columns: 1fr 100px;
+    position: relative;
+    padding-top: 24px;
+    #user {
+      display: inline;
+      background: ${theme.colors.secundary[100]};
+      padding: 2px 4px;
+      font-weight: 400;
+      font-size: 16px;
+      border-radius: 2px;
+      color: #fff;
+      margin-right: 8px;
+    }
   `}
 `;
 
@@ -36,7 +48,7 @@ export const Buttons = styled.div`
   gap: 8px;
 `;
 
-export const UserTag = styled.a`
+export const ReplyTag = styled.a`
   ${({ theme }) => css`
     display: inline;
     background: ${theme.colors.secundary[100]};
@@ -44,8 +56,11 @@ export const UserTag = styled.a`
     font-weight: 400;
     font-size: 16px;
     border-radius: 2px;
+    top: -8px;
+    left: -8px;
     color: #fff;
     margin-right: 8px;
+    position: absolute;
   `}
 `;
 

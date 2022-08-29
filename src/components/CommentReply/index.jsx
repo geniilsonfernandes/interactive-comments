@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import propTypes from "prop-types";
 import { useRef } from "react";
 import { useEffect } from "react";
+import { WrapperButton } from "../WrapperButton";
+import { BsFillReplyFill as ReplyIcon } from "react-icons/bs";
 
 import * as S from "./styles";
-import { WrapperButton } from "../WrapperButton";
 
-const CommentReply = ({ onReply, onCancel }) => {
+const CommentReply = ({ onReply, onCancel, user }) => {
   const [textContent, setTextContent] = useState("");
   const [disableButton, setDisableButton] = useState(true);
   const replyEl = useRef();
@@ -25,8 +26,28 @@ const CommentReply = ({ onReply, onCancel }) => {
   };
 
   useEffect(() => {
+    function moveCursorAtTheEnd() {
+      const selection = document.getSelection();
+      const range = document.createRange();
+      const contenteditable = replyEl.current;
+
+      if (contenteditable.lastChild.nodeType == 3) {
+        range.setStart(
+          contenteditable.lastChild,
+          contenteditable.lastChild.length
+        );
+      } else {
+        range.setStart(contenteditable, contenteditable.childNodes.length);
+      }
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+
     replyEl.current.focus();
-  }, []);
+    replyEl.current.textContent = `@${user},`;
+
+    moveCursorAtTheEnd();
+  }, [user]);
 
   useEffect(() => {
     if (textContent !== "") {
@@ -36,6 +57,9 @@ const CommentReply = ({ onReply, onCancel }) => {
 
   return (
     <S.BoxWrapper>
+      <S.ReplyTag>
+        <ReplyIcon /> Repply {user}
+      </S.ReplyTag>
       <S.Comment
         contentEditable={true}
         ref={replyEl}
@@ -58,7 +82,8 @@ const CommentReply = ({ onReply, onCancel }) => {
 
 CommentReply.propTypes = {
   onReply: propTypes.func,
-  onCancel: propTypes.func
+  onCancel: propTypes.func,
+  user: propTypes.string
 };
 
 export default CommentReply;
