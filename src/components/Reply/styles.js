@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { WrapperButton } from "../styles";
+import { WrapperButton, WrapperButtonWithIcon } from "../styles";
 
 export const BoxWrapper = styled.div`
   ${({ theme }) => css`
@@ -26,7 +26,31 @@ export const Comment = styled.p`
   `}
 `;
 
+export const Buttons = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+`;
+
 export const SubmitButton = styled.div`
   ${WrapperButton}
-  height: 38px;
+`;
+
+export const UserTag = styled.a`
+  ${({ theme }) => css`
+    display: inline;
+    background: ${theme.colors.secundary[100]};
+    padding: 2px 4px;
+    font-weight: 400;
+    font-size: 14px;
+    border-radius: 2px;
+    color: #fff;
+    margin-right: 8px;
+  `}
+`;
+
+export const CancelButton = styled.button`
+  color: #ee6764;
+  ${WrapperButtonWithIcon}
+  justify-content: center;
 `;

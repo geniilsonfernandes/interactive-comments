@@ -3,7 +3,7 @@ import p from "prop-types";
 import * as S from "./styles";
 import { useRef } from "react";
 
-const Reply = ({ onReply }) => {
+const Reply = ({ onReply, onCancel }) => {
   const replyEl = useRef();
 
   const handleSubmitClick = () => {
@@ -21,14 +21,22 @@ const Reply = ({ onReply }) => {
         contentEditable={true}
         ref={replyEl}
         suppressContentEditableWarning={true}
-      ></S.Comment>
-      <S.SubmitButton onClick={() => handleSubmitClick()}>Send</S.SubmitButton>
+      >
+        add reply
+      </S.Comment>
+      <S.Buttons>
+        <S.SubmitButton onClick={() => handleSubmitClick()}>
+          Send
+        </S.SubmitButton>
+        <S.CancelButton onClick={() => onCancel()}>Cancel</S.CancelButton>
+      </S.Buttons>
     </S.BoxWrapper>
   );
 };
 
 Reply.propTypes = {
-  onReply: p.func
+  onReply: p.func,
+  onCancel: p.func
 };
 
 export default Reply;
