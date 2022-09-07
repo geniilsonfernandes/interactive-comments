@@ -3,19 +3,19 @@ import propTypes from "prop-types";
 import * as S from "./styles";
 import { useRef } from "react";
 
-const CommentInput = ({ onSubmitComment, user, userID }) => {
+const CommentInput = ({ onSubmitComment, user, userUid }) => {
   const replyEl = useRef();
 
   const handleSubmitClick = () => {
     onSubmitComment &&
       onSubmitComment({
-        userID,
-        user: user,
-        comments_id: Math.floor(Math.random() * 64),
+        user_uid: userUid,
+        user_name: user,
+        comment_id: Math.floor(Math.random() * 64),
         comment: replyEl.current.innerHTML,
         replys_ids: [],
         reply_parent: null,
-        reply: false
+        is_reply: false
       });
 
     replyEl.current.textContent = "";
@@ -36,7 +36,7 @@ const CommentInput = ({ onSubmitComment, user, userID }) => {
 CommentInput.propTypes = {
   onSubmitComment: propTypes.func,
   user: propTypes.string,
-  userID: propTypes.number
+  userUid: propTypes.number
 };
 
 export default CommentInput;
