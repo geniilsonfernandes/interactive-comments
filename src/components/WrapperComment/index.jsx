@@ -11,7 +11,9 @@ const WrapperComment = ({
   onSubmitReply,
   user,
   userUid,
-  localUid
+  localUid,
+  onEditComment,
+  onDeleteComment
 }) => {
   const getRepliesComment = replys.filter(
     (item) => item.reply_parent == comment_id
@@ -29,10 +31,14 @@ const WrapperComment = ({
         userUid={userUid}
         isAuthor={localUid === userUid}
         onSubmitReply={handleSubmitReply}
+        onEdit={onEditComment}
+        commentId={comment_id}
+        onDelete={onDeleteComment}
       />
       <S.WrapperReply aria-label="replies">
         {getRepliesComment.map((comment) => (
           <Comment
+            commentId={comment.comment_id}
             userUid={comment.user_uid}
             userName={comment.user_name}
             isReply={true}
@@ -40,6 +46,8 @@ const WrapperComment = ({
             content={comment.comment}
             onSubmitReply={handleSubmitReply}
             isAuthor={localUid === comment.user_uid}
+            onEdit={onEditComment}
+            onDelete={onDeleteComment}
           />
         ))}
       </S.WrapperReply>
@@ -53,7 +61,9 @@ WrapperComment.propTypes = {
   user: propTypes.string,
   userUid: propTypes.number,
   replys: propTypes.array,
+  onEditComment: propTypes.func,
   onSubmitReply: propTypes.func,
+  onDeleteComment: propTypes.func,
   localUid: propTypes.number,
   localUser: propTypes.string
 };

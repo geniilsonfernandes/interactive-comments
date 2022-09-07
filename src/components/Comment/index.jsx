@@ -13,17 +13,51 @@ import * as S from "./styles";
 //   content &&
 //   content.split("").map((word) => word.replace(regex, userToReplie(word)));
 
-const Comment = ({ content, userName, onSubmitReply, isAuthor }) => {
-  const commnetEl = useRef();
+const Comment = ({
+  content,
+  userName,
+  onSubmitReply,
+  isAuthor,
+  onEdit,
+  commentId,
+  onDelete
+}) => {
+  const commetEl = useRef();
+  const [editableContent, seteditableContent] = useState("");
+  const [prevComment, setPrevComment] = useState("");
   const [editable, setEditable] = useState(false);
   const [showReplyInput, setShowReplyInput] = useState(false);
 
-  const handleClickToUpdate = (type) => {
-    if (type === "edit") {
+  const handleChange = (e) => {
+    const commentEL = {
+      HTML: e.target.innerHTML,
+      text: e.target.innerText,
+      value: e.target.textContent
+    };
+    seteditableContent(commentEL.HTML);
+  };
+
+  const commentOptios = {
+    edit() {
       setEditable(true);
-      commnetEl.current.focus();
-    } else {
+      setPrevComment(commetEl.current.innerHTML);
+      commetEl.current.focus();
+    },
+    cancel() {
+      commetEl.current.innerHTML = prevComment;
       setEditable(false);
+    },
+    submit() {
+      const raw = {
+        HTML: commetEl.current.innerHTML,
+        text: commetEl.current.innerText,
+        value: commetEl.current.textContent
+      };
+      onEdit({ raw, commentId, editableContent });
+      setEditable(false);
+    },
+    delete() {
+      onDelete(commentId);
     }
   };
 
@@ -38,7 +72,7 @@ const Comment = ({ content, userName, onSubmitReply, isAuthor }) => {
   const handleCancelReply = () => setShowReplyInput(false);
 
   return (
-    <S.WrapperMain>
+    <S.WrapperMain aria-label="replie">
       <S.Wrapper>
         <S.Counter>
           <Counter />
@@ -54,10 +88,20 @@ const Comment = ({ content, userName, onSubmitReply, isAuthor }) => {
             <S.ButtonsGroup>
               {isAuthor ? (
                 <>
-                  <S.EditButton onClick={() => handleClickToUpdate("edit")}>
-                    <Edit color="#555ABA" /> Edit
+                  <S.EditButton
+                    onClick={() =>
+                      commentOptios[editable ? "cancel" : "edit"]()
+                    }
+                  >
+                    {editable ? (
+                      <>Cancel</>
+                    ) : (
+                      <>
+                        <Edit color="#555ABA" /> Edit
+                      </>
+                    )}
                   </S.EditButton>
-                  <S.DeleteButton>
+                  <S.DeleteButton onClick={() => commentOptios.delete()}>
                     <Trash color="#EE6764" /> Delete
                   </S.DeleteButton>
                 </>
@@ -71,13 +115,14 @@ const Comment = ({ content, userName, onSubmitReply, isAuthor }) => {
           <S.Comment
             contentEditable={editable}
             isEditable={editable}
-            ref={commnetEl}
+            ref={commetEl}
             tabIndex={-1}
             suppressContentEditableWarning={true}
             dangerouslySetInnerHTML={{ __html: content }}
+            onInput={(e) => handleChange(e)}
           />
           {editable && (
-            <S.UpdateButton onClick={() => handleClickToUpdate("update")}>
+            <S.UpdateButton onClick={() => commentOptios.submit()}>
               Update
             </S.UpdateButton>
           )}
@@ -96,9 +141,12 @@ const Comment = ({ content, userName, onSubmitReply, isAuthor }) => {
 
 Comment.propTypes = {
   id: propTypes.number,
+  commentId: propTypes.number,
   userUid: propTypes.number,
   content: propTypes.string,
   userName: propTypes.string,
+  onEdit: propTypes.func,
+  onDelete: propTypes.func,
   onSubmitReply: propTypes.func,
   isAuthor: propTypes.bool
 };
