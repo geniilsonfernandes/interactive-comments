@@ -12,6 +12,9 @@ export const Wrapper = styled.div`
     div {
       width: 100%;
     }
+    @media (max-width: 624px) {
+      flex-direction: row;
+    }
   `}
 `;
 export const Counter = styled.span`
