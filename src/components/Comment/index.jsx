@@ -1,18 +1,22 @@
 import React, { useState } from "react";
-import p from "prop-types";
+import propTypes from "prop-types";
 import { BsFillReplyFill as ReplyIcon, BsTrash as Trash } from "react-icons/bs";
 import { BiEditAlt as Edit } from "react-icons/bi";
 import { useRef } from "react";
 import Counter from "../Counter";
-import Reply from "../Reply";
+import Reply from "../CommentReply";
 
 import * as S from "./styles";
 
-const Comment = ({ hasAthor, content, id, onReplySubmit }) => {
+// const regex = /\B@\w+/g;
+// const addUserTag =
+//   content &&
+//   content.split("").map((word) => word.replace(regex, userToReplie(word)));
+
+const Comment = ({ content, userName, onSubmitReply, isAuthor }) => {
+  const commnetEl = useRef();
   const [editable, setEditable] = useState(false);
   const [showReplyInput, setShowReplyInput] = useState(false);
-
-  const commnetEl = useRef();
 
   const handleClickToUpdate = (type) => {
     if (type === "edit") {
@@ -23,22 +27,15 @@ const Comment = ({ hasAthor, content, id, onReplySubmit }) => {
     }
   };
 
-  const handleReplyButton = () => {
-    setShowReplyInput((s) => !s);
+  const handleShowReplyButton = () => {
+    setShowReplyInput((prevState) => !prevState);
   };
 
   const handleSubmitReply = (reply) => {
-    onReplySubmit &&
-      onReplySubmit({
-        user: "genilson",
-        comments_id: Math.floor(Math.random() * 1000),
-        comment: reply.HTML,
-        replys_ids: [],
-        reply_parent: id,
-        reply: true
-      });
+    onSubmitReply && onSubmitReply(reply);
     setShowReplyInput(false);
   };
+  const handleCancelReply = () => setShowReplyInput(false);
 
   return (
     <S.WrapperMain>
@@ -49,12 +46,13 @@ const Comment = ({ hasAthor, content, id, onReplySubmit }) => {
         <S.Content>
           <S.Head>
             <S.User>
-              <span>juliusomo</span>
-              {hasAthor && <S.UserTag>You</S.UserTag>}
+              <S.UserIcon>{userName.substring(0, 1)}</S.UserIcon>
+              <span>{userName}</span>
+              {isAuthor && <S.UserTag>You</S.UserTag>}
             </S.User>
             <S.Date>1 month ago</S.Date>
             <S.ButtonsGroup>
-              {hasAthor ? (
+              {isAuthor ? (
                 <>
                   <S.EditButton onClick={() => handleClickToUpdate("edit")}>
                     <Edit color="#555ABA" /> Edit
@@ -64,7 +62,7 @@ const Comment = ({ hasAthor, content, id, onReplySubmit }) => {
                   </S.DeleteButton>
                 </>
               ) : (
-                <S.ReplyButton onClick={() => handleReplyButton()}>
+                <S.ReplyButton onClick={() => handleShowReplyButton()}>
                   <ReplyIcon color="#555ABA" /> Reply
                 </S.ReplyButton>
               )}
@@ -85,16 +83,24 @@ const Comment = ({ hasAthor, content, id, onReplySubmit }) => {
           )}
         </S.Content>
       </S.Wrapper>
-      {showReplyInput && <Reply onReply={handleSubmitReply} />}
+      {showReplyInput && (
+        <Reply
+          onReply={handleSubmitReply}
+          onCancel={handleCancelReply}
+          user={userName}
+        />
+      )}
     </S.WrapperMain>
   );
 };
 
 Comment.propTypes = {
-  hasAthor: p.bool,
-  id: p.number,
-  content: p.string,
-  onReplySubmit: p.func
+  id: propTypes.number,
+  userUid: propTypes.number,
+  content: propTypes.string,
+  userName: propTypes.string,
+  onSubmitReply: propTypes.func,
+  isAuthor: propTypes.bool
 };
 
 export default Comment;

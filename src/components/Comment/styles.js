@@ -21,7 +21,13 @@ export const Wrapper = styled.div`
 
 export const Counter = styled.div``;
 export const Content = styled.div`
-  width: 100%;
+  ${({ theme }) => css`
+    width: 100%;
+    .replie__user {
+      font-weight: 600;
+      color: ${theme.colors.secundary[100]};
+    }
+  `}
 `;
 
 export const Head = styled.div`
@@ -38,7 +44,24 @@ export const User = styled.div`
     color: ${theme.colors.text[100]};
     display: flex;
     align-items: center;
-    gap: 4px;
+
+    gap: 8px;
+  `}
+`;
+
+export const UserIcon = styled.div`
+  ${({ theme }) => css`
+    height: 38px;
+    width: 38px;
+    border-radius: 24px;
+    font-weight: 600;
+    font-size: 16px;
+    background: ${theme.colors.background[200]};
+    color: ${theme.colors.secundary[100]};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: capitalize;
   `}
 `;
 
