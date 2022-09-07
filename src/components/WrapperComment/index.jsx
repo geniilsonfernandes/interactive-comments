@@ -22,7 +22,6 @@ const WrapperComment = ({
   const handleSubmitReply = (reply) => {
     onSubmitReply && onSubmitReply(reply, comment_id);
   };
-
   return (
     <S.Wrapper>
       <Comment
@@ -35,22 +34,24 @@ const WrapperComment = ({
         commentId={comment_id}
         onDelete={onDeleteComment}
       />
-      <S.WrapperReply aria-label="replies">
-        {getRepliesComment.map((comment) => (
-          <Comment
-            commentId={comment.comment_id}
-            userUid={comment.user_uid}
-            userName={comment.user_name}
-            isReply={true}
-            key={comment.comment_id}
-            content={comment.comment}
-            onSubmitReply={handleSubmitReply}
-            isAuthor={localUid === comment.user_uid}
-            onEdit={onEditComment}
-            onDelete={onDeleteComment}
-          />
-        ))}
-      </S.WrapperReply>
+      {getRepliesComment.length !== 0 && (
+        <S.WrapperReply aria-label="replies">
+          {getRepliesComment.map((comment) => (
+            <Comment
+              commentId={comment.comment_id}
+              userUid={comment.user_uid}
+              userName={comment.user_name}
+              isReply={true}
+              key={comment.comment_id}
+              content={comment.comment}
+              onSubmitReply={handleSubmitReply}
+              isAuthor={localUid === comment.user_uid}
+              onEdit={onEditComment}
+              onDelete={onDeleteComment}
+            />
+          ))}
+        </S.WrapperReply>
+      )}
     </S.Wrapper>
   );
 };
