@@ -17,6 +17,8 @@ const CommentInput = ({ onSubmitComment, user, userID }) => {
         reply_parent: null,
         reply: false
       });
+
+    replyEl.current.textContent = "";
   };
 
   return (
