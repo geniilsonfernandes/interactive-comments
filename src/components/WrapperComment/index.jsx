@@ -1,50 +1,45 @@
 import React from "react";
 import Comment from "../Comment";
-import p from "prop-types";
+import propTypes from "prop-types";
 
 import * as S from "./styles";
-import { useStorageContext } from "../../context/dataContext";
 
 const WrapperComment = ({
   content,
   replys,
   comment_id,
-  onSetReply,
+  onSubmitReply,
   user,
-  userUid
+  userUid,
+  localUid
 }) => {
-  const { localUid, localUser } = useStorageContext();
-
   const getRepliesComment = replys.filter(
     (item) => item.reply_parent == comment_id
   );
 
   const handleSubmitReply = (reply) => {
-    onSetReply &&
-      onSetReply({
-        user_name: localUser,
-        user_uid: localUid,
-        comment_id: Math.floor(Math.random() * 1000),
-        comment: reply.HTML,
-        text: reply.text,
-        replys_ids: [],
-        reply_parent: comment_id,
-        is_reply: true
-      });
+    onSubmitReply && onSubmitReply(reply, comment_id);
   };
 
   return (
     <S.Wrapper>
-      <Comment content={content} userName={user} userUid={userUid} />
+      <Comment
+        content={content}
+        userName={user}
+        userUid={userUid}
+        isAuthor={localUid === userUid}
+        onSubmitReply={handleSubmitReply}
+      />
       <S.WrapperReply aria-label="replies">
         {getRepliesComment.map((comment) => (
           <Comment
             userUid={comment.user_uid}
             userName={comment.user_name}
             isReply={true}
-            key={comment.comments_id}
+            key={comment.comment_id}
             content={comment.comment}
             onSubmitReply={handleSubmitReply}
+            isAuthor={localUid === comment.user_uid}
           />
         ))}
       </S.WrapperReply>
@@ -53,12 +48,14 @@ const WrapperComment = ({
 };
 
 WrapperComment.propTypes = {
-  comment_id: p.number,
-  content: p.string,
-  user: p.string,
-  userUid: p.number,
-  replys: p.array,
-  onSetReply: p.func
+  comment_id: propTypes.number,
+  content: propTypes.string,
+  user: propTypes.string,
+  userUid: propTypes.number,
+  replys: propTypes.array,
+  onSubmitReply: propTypes.func,
+  localUid: propTypes.number,
+  localUser: propTypes.string
 };
 
 export default WrapperComment;
