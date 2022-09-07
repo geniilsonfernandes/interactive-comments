@@ -1,11 +1,9 @@
 components:
+modal de alerta de remover
+coloca a data correta
 
+mobile: 
+trabalhar o responsivo dos components
 
-comment imput
-
-state styles:
-
-loading buttons
-
-logic:
-WRAPPER DE COMENTS
+funcao:
+funcoes de voto

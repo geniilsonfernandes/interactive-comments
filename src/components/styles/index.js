@@ -4,7 +4,7 @@ export const WrapperButtonWithIcon = css`
   ${({ theme }) => css`
     display: flex;
     gap: 4px;
-    padding: 8px 16px;
+    padding: 8px 8px;
     border: none;
     background: transparent;
     font-weight: 600;
