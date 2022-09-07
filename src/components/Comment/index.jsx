@@ -8,11 +8,6 @@ import Reply from "../CommentReply";
 
 import * as S from "./styles";
 
-// const regex = /\B@\w+/g;
-// const addUserTag =
-//   content &&
-//   content.split("").map((word) => word.replace(regex, userToReplie(word)));
-
 const Comment = ({
   content,
   userName,
@@ -69,6 +64,7 @@ const Comment = ({
     onSubmitReply && onSubmitReply(reply);
     setShowReplyInput(false);
   };
+
   const handleCancelReply = () => setShowReplyInput(false);
 
   return (
