@@ -19,7 +19,11 @@ export const Wrapper = styled.div`
   `}
 `;
 
-export const Counter = styled.div``;
+export const Counter = styled.div`
+  @media (max-width: 624px) {
+    display: none;
+  }
+`;
 export const Content = styled.div`
   ${({ theme }) => css`
     width: 100%;
@@ -30,11 +34,23 @@ export const Content = styled.div`
   `}
 `;
 
+export const CounterMobile = styled.div``;
 export const Head = styled.div`
   display: flex;
   align-items: center;
   padding: 0 ${wrapperSpacing / 2}px;
   gap: 8px;
+`;
+
+export const Footer = styled.div`
+  display: none;
+  align-items: center;
+  padding: 0 ${wrapperSpacing / 2}px;
+  gap: 8px;
+
+  @media (max-width: 624px) {
+    display: flex;
+  }
 `;
 
 export const User = styled.div`
@@ -85,10 +101,18 @@ export const Date = styled.span`
   `}
 `;
 
+export const ButtonsGroupMobile = styled.div`
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+`;
 export const ButtonsGroup = styled.div`
   margin-left: auto;
   display: flex;
   gap: 8px;
+  @media (max-width: 624px) {
+    display: none;
+  }
 `;
 
 export const EditButton = styled.button`
@@ -126,10 +150,10 @@ export const Comment = styled.p`
   ${({ theme, isEditable }) => css`
     margin-top: 8px;
     padding: ${wrapperSpacing / 2}px;
-    line-height: 24px;
     font-weight: 400;
     font-size: 16px;
-    color: ${theme.colors.text[500]};
+    line-height: 28px;
+    color: ${theme.colors.textColor[200]};
     border-radius: 4px;
     ${isEditable && CommentModifiers.editable(theme)}
   `}

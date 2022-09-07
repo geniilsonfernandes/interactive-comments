@@ -129,6 +129,39 @@ const Comment = ({
               Update
             </S.UpdateButton>
           )}
+          <S.Footer>
+            <S.CounterMobile>
+              <Counter />
+            </S.CounterMobile>
+            <S.ButtonsGroupMobile>
+              {isAuthor ? (
+                <>
+                  <S.EditButton
+                    onClick={() =>
+                      commentOptios[editable ? "cancel" : "edit"]()
+                    }
+                  >
+                    {editable ? (
+                      <>Cancel</>
+                    ) : (
+                      <>
+                        <Edit color="#555ABA" /> Edit
+                      </>
+                    )}
+                  </S.EditButton>
+                  <S.DeleteButton
+                    onClick={() => commentOptios.openModalDelete(true)}
+                  >
+                    <Trash color="#EE6764" /> Delete
+                  </S.DeleteButton>
+                </>
+              ) : (
+                <S.ReplyButton onClick={() => handleShowReplyButton()}>
+                  <ReplyIcon color="#555ABA" /> Reply
+                </S.ReplyButton>
+              )}
+            </S.ButtonsGroupMobile>
+          </S.Footer>
         </S.Content>
       </S.Wrapper>
 
