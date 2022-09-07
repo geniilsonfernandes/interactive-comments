@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import propTypes from "prop-types";
 import { BsFillReplyFill as ReplyIcon, BsTrash as Trash } from "react-icons/bs";
@@ -5,7 +6,7 @@ import { BiEditAlt as Edit } from "react-icons/bi";
 import { useRef } from "react";
 import Counter from "../Counter";
 import Reply from "../CommentReply";
-
+import AlertModal from "../../components/AlertModal";
 import * as S from "./styles";
 
 const Comment = ({
@@ -18,6 +19,7 @@ const Comment = ({
   onDelete
 }) => {
   const commetEl = useRef();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [editableContent, seteditableContent] = useState("");
   const [prevComment, setPrevComment] = useState("");
   const [editable, setEditable] = useState(false);
@@ -51,7 +53,10 @@ const Comment = ({
       onEdit({ raw, commentId, editableContent });
       setEditable(false);
     },
-    delete() {
+    openModalDelete(state) {
+      setShowDeleteModal(state);
+    },
+    onDeleteComment() {
       onDelete(commentId);
     }
   };
@@ -97,7 +102,9 @@ const Comment = ({
                       </>
                     )}
                   </S.EditButton>
-                  <S.DeleteButton onClick={() => commentOptios.delete()}>
+                  <S.DeleteButton
+                    onClick={() => commentOptios.openModalDelete(true)}
+                  >
                     <Trash color="#EE6764" /> Delete
                   </S.DeleteButton>
                 </>
@@ -124,6 +131,33 @@ const Comment = ({
           )}
         </S.Content>
       </S.Wrapper>
+
+      {showDeleteModal && (
+        <AlertModal onClickOutSide={() => commentOptios.openModalDelete(false)}>
+          <S.DeleteModalWrapper>
+            <S.ModalHead>Delete comment</S.ModalHead>
+            <S.ModalText>
+              Are you sure you want to delete this comment? This will remove the
+              comment and can&apos;t be undone.
+            </S.ModalText>
+            <S.ButtonsWrapper>
+              <S.ModalButton
+                secundary
+                onClick={() => commentOptios.openModalDelete(false)}
+              >
+                Cancel
+              </S.ModalButton>
+              <S.ModalButton
+                alert
+                onClick={() => commentOptios.onDeleteComment()}
+              >
+                Delete
+              </S.ModalButton>
+            </S.ButtonsWrapper>
+          </S.DeleteModalWrapper>
+        </AlertModal>
+      )}
+
       {showReplyInput && (
         <Reply
           onReply={handleSubmitReply}

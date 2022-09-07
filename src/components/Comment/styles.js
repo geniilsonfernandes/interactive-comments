@@ -134,3 +134,72 @@ export const Comment = styled.p`
     ${isEditable && CommentModifiers.editable(theme)}
   `}
 `;
+
+export const DeleteModalWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 300px;
+`;
+
+export const ModalHead = styled.h1`
+  ${({ theme }) => css`
+    font-weight: 600;
+    font-size: 18px;
+    color: ${theme.colors.textColor[100]};
+  `}
+`;
+
+export const ModalText = styled.h1`
+  ${({ theme }) => css`
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    color: ${theme.colors.textColor[200]};
+  `}
+`;
+export const ButtonsWrapper = styled.div`
+  ${({ theme }) => css`
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 22px;
+    color: ${theme.colors.textColor[200]};
+    display: flex;
+    gap: 16px;
+  `}
+`;
+
+const ModalButtonModifier = {
+  secundary: (theme) => css`
+    background: ${theme.colors.buttons.secundary[100]};
+    transition: all ease-in-out 300ms;
+    &:hover {
+      background: ${theme.colors.buttons.secundary[200]};
+    }
+  `,
+  alert: (theme) => css`
+    background: ${theme.colors.buttons.alert[100]};
+    transition: all ease-in-out 300ms;
+    &:hover {
+      background: ${theme.colors.buttons.alert[200]};
+    }
+  `
+};
+
+export const ModalButton = styled.button`
+  ${({ theme, secundary, alert }) => css`
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 22px;
+    color: ${theme.colors.textColor[200]};
+    padding: 10px 0;
+    width: 100%;
+    background: #68727e;
+    color: #fff;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    ${!!secundary && ModalButtonModifier.secundary(theme)}
+    ${!!alert && ModalButtonModifier.alert(theme)}
+  `}
+`;
