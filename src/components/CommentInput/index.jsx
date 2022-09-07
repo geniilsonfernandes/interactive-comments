@@ -1,34 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import propTypes from "prop-types";
 import * as S from "./styles";
 import { useRef } from "react";
+import { WrapperButton } from "../WrapperButton";
 
-const CommentInput = ({ onSubmitComment, user, userUid }) => {
-  const replyEl = useRef();
+const CommentInput = ({ onSubmitComment }) => {
+  const [disableButton, setDisableButton] = useState(true);
+  const commentEl = useRef();
 
   const handleSubmitClick = () => {
     onSubmitComment &&
       onSubmitComment({
-        user_uid: userUid,
-        user_name: user,
-        comment_id: Math.floor(Math.random() * 64),
-        comment: replyEl.current.innerHTML,
-        replys_ids: [],
-        reply_parent: null,
-        is_reply: false
+        HTML: commentEl.current.innerHTML,
+        text: commentEl.current.innerText,
+        value: commentEl.current.textContent
       });
+    commentEl.current.textContent = "";
+  };
 
-    replyEl.current.textContent = "";
+  const handleChange = (e) => {
+    e.target.textContent !== ""
+      ? setDisableButton(false)
+      : setDisableButton(true);
   };
 
   return (
     <S.BoxWrapper>
       <S.Comment
         contentEditable={true}
-        ref={replyEl}
+        ref={commentEl}
         suppressContentEditableWarning={true}
+        onInput={(e) => handleChange(e)}
       ></S.Comment>
-      <S.SubmitButton onClick={() => handleSubmitClick()}>Send</S.SubmitButton>
+      <WrapperButton
+        isDisabled={disableButton}
+        onClick={() => handleSubmitClick()}
+      >
+        Send
+      </WrapperButton>
     </S.BoxWrapper>
   );
 };
