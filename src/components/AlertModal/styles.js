@@ -2,7 +2,7 @@ import styled, { css } from "styled-components";
 
 export const Wrapper = styled.div`
   ${() => css`
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
@@ -27,9 +27,9 @@ export const Overlayer = styled.div`
 export const Content = styled.div`
   ${() => css`
     background: #fff;
-    border-radius: 16px;
+    border-radius: 8px;
     max-width: 400px;
-    padding: 16px;
+    padding: 24px;
     z-index: 999;
     position: relative;
   `}
