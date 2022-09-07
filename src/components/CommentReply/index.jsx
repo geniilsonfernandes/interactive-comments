@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, { useState } from "react";
 import propTypes from "prop-types";
 import { useRef } from "react";
@@ -6,6 +7,9 @@ import { WrapperButton } from "../WrapperButton";
 import { BsFillReplyFill as ReplyIcon } from "react-icons/bs";
 
 import * as S from "./styles";
+
+const userToReplie = (user) =>
+  `<span contentEditable=false class="replie__user">@${user}</span>`;
 
 const CommentReply = ({ onReply, onCancel, user }) => {
   const [textContent, setTextContent] = useState("");
@@ -42,10 +46,7 @@ const CommentReply = ({ onReply, onCancel, user }) => {
       selection.removeAllRanges();
       selection.addRange(range);
     }
-
-    replyEl.current.focus();
-    replyEl.current.textContent = `@${user},`;
-
+    replyEl.current.innerHTML = `${userToReplie(user)},&nbsp;`;
     moveCursorAtTheEnd();
   }, [user]);
 

@@ -39,6 +39,10 @@ export const Comment = styled.p`
       border: 1px solid ${theme.colors.secundary[200]};
       outline: 1px solid ${theme.colors.secundary[200]};
     }
+    .replie__user {
+      font-weight: 600;
+      color: ${theme.colors.secundary[100]};
+    }
   `}
 `;
 
