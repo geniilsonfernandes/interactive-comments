@@ -9,6 +9,9 @@ export const BoxWrapper = styled.div`
     gap: 16px;
     display: grid;
     grid-template-columns: 1fr 100px;
+    @media (max-width: 624px) {
+      grid-template-columns: 1fr;
+    }
   `}
 `;
 
