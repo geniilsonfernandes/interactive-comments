@@ -9,9 +9,11 @@ const WrapperButtonModifier = {
 export const WrapperButton = styled.button`
   ${({ theme, isDisabled }) => css`
     display: flex;
+    align-items: center;
     justify-content: center;
     gap: 4px;
-    padding: 8px 16px;
+    padding: 0px 16px;
+    height: 38px;
     border: none;
     background: ${theme.colors.secundary[100]};
     font-weight: 400;
