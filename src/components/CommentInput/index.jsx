@@ -1,17 +1,21 @@
 import React from "react";
-import p from "prop-types";
+import propTypes from "prop-types";
 import * as S from "./styles";
 import { useRef } from "react";
 
-const CommentInput = ({ onSubmitComment }) => {
+const CommentInput = ({ onSubmitComment, user, userID }) => {
   const replyEl = useRef();
 
   const handleSubmitClick = () => {
     onSubmitComment &&
       onSubmitComment({
-        HTML: replyEl.current.innerHTML,
-        text: replyEl.current.innerText,
-        value: replyEl.current.textContent
+        userID,
+        user: user,
+        comments_id: Math.floor(Math.random() * 64),
+        comment: replyEl.current.innerHTML,
+        replys_ids: [],
+        reply_parent: null,
+        reply: false
       });
   };
 
@@ -28,7 +32,9 @@ const CommentInput = ({ onSubmitComment }) => {
 };
 
 CommentInput.propTypes = {
-  onSubmitComment: p.func
+  onSubmitComment: propTypes.func,
+  user: propTypes.string,
+  userID: propTypes.number
 };
 
 export default CommentInput;
